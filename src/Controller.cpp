@@ -45,7 +45,7 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> robotModule,
   auto planConfig = config("plans")(controlRobot().name());
 
   mc_rtc::log::info("Loading default stabilizer configuration");
-  auto stabiConfig = robot().module().defaultLIPMStabilizerConfiguration();
+  mc_rbdyn::lipm_stabilizer::DCMStabilizerConfiguration stabiConfig(robotModule->defaultLIPMStabilizerConfiguration());
   if(robotConfig.has("stabilizer"))
   {
     mc_rtc::log::info("Loading additional stabilizer configuration:\n{}", robotConfig("stabilizer").dump(true));
@@ -112,7 +112,7 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> robotModule,
   // ====================
   // clang-format off
   stabilizer_.reset(
-    new mc_tasks::lipm_stabilizer::StabilizerTask(
+    new mc_tasks::lipm_stabilizer::DCMStabilizerTask(
       solver().robots(),
       solver().realRobots(),
       robot().robotIndex(),
