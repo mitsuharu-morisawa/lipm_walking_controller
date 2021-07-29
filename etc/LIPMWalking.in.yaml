@@ -22,7 +22,7 @@ robot_models:
         MAX_AVERAGE_DCM_ERROR: 0.05
       dcm_tracking:
         gains:
-          poles: [12, 3, 1]
+          poles: [15, 3, 1]
           flexibility: 20.0
           zmpd: 0.05
         com_vel_filter_gain: 0.5
@@ -61,6 +61,27 @@ robot_models:
       friction: 0.7
       leftAnkleOffset: [0.,0.] # target center of foot
   hrp5_p:
+    stabilizer:
+      safety_tresholds:
+        MAX_AVERAGE_DCM_ERROR: 0.05
+      dcm_tracking:
+        gains:
+          poles: [15, 3, 1]
+          flexibility: 20.0
+          zmpd: 0.05
+        com_vel_filter_gain: 0.5
+        com_acc_filter_gain: 0.3
+      admittance:
+        com: [0.0, 0.0]
+        cop: [0.02, 0.02]
+        dfz: 0.0001
+        maxVel:
+          angular: [3., 3., 3.]
+          linear: [1., 1., 1.]
+      tasks:
+        contact:
+          damping: 300.
+        forceSensorCutoffRatio: 0.7
     sole:
       half_length: 0.11895
       half_width: 0.069
