@@ -18,22 +18,29 @@ robot_models:
     # See https://jrl-umi3218.github.io/mc_rtc/json-full.html#MetaTask/LIPMStabilizerTask
     # For example:
     stabilizer:
+      safety_tresholds:
+        MAX_AVERAGE_DCM_ERROR: 0.05
       dcm_tracking:
         gains:
-          prop: 4
-          integral: 20
-          deriv: 0.5
+          poles: [12, 3, 1]
+          flexibility: 20.0
+          zmpd: 0.05
+        com_vel_filter_gain: 0.5
+        com_acc_filter_gain: 0.3
       admittance:
-        cop: [0.02, 0.01]
-        # maxVel:
-        #   angular: [1., 1., 1.]
-        #   linear: [0.5, 0.5, 0.5]
+        com: [0.0, 0.0]
+        cop: [0.02, 0.02]
+        dfz: 0.0001
+        maxVel:
+          angular: [3., 3., 3.]
+          linear: [1., 1., 1.]
       tasks:
         contact:
           damping: 300.
-      dcm_bias:
-        biasDriftPerSeconStd: 0.0001
-        withDCMBias: true
+        forceSensorCutoffRatio: 0.7
+      #dcm_bias:
+      #  biasDriftPerSeconStd: 0.0001
+      #  withDCMBias: true
     sole:
       half_length: 0.108
       half_width: 0.07
@@ -1094,6 +1101,9 @@ collisions:
   - type: collision
     useMinimal: true
 contacts: []
+init_pos:
+  #translation: [20, 0.0, 0.8275] # JVRC1
+  translation: [20, 0.0, 0.773] # HRP2DRC
 robots:
   ground:
     module: env/ground
@@ -1130,7 +1140,7 @@ ObserverPipelines:
   gui: true
   observers:
     - type: Encoder
-    - type: Attitude
+    #- type: Attitude
     - type: KinematicInertial
       config:
         anchorFrame:

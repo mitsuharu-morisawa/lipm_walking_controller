@@ -33,7 +33,7 @@
 #include <mc_planning/Pendulum.h>
 #include <mc_rtc/logging.h>
 #include <mc_tasks/SurfaceTransformTask.h>
-#include <mc_tasks/lipm_stabilizer/StabilizerTask.h>
+#include <mc_tasks/lipm_stabilizer/DCMStabilizerTask.h>
 
 #include <lipm_walking/Contact.h>
 #include <lipm_walking/FootstepPlan.h>
@@ -269,7 +269,7 @@ struct MC_CONTROL_DLLAPI Controller : public mc_control::fsm::Controller
   /** This getter is only used for consistency with the rest of mc_rtc.
    *
    */
-  std::shared_ptr<mc_tasks::lipm_stabilizer::StabilizerTask> stabilizer()
+  std::shared_ptr<mc_tasks::lipm_stabilizer::DCMStabilizerTask> stabilizer()
   {
     return stabilizer_;
   }
@@ -310,7 +310,7 @@ public: /* visible to FSM states */
   unsigned nbMPCFailures_ = 0; /**< Number of times the walking pattern generator failed */
 
 private: /* hidden from FSM states */
-  std::shared_ptr<mc_tasks::lipm_stabilizer::StabilizerTask> stabilizer_;
+  std::shared_ptr<mc_tasks::lipm_stabilizer::DCMStabilizerTask> stabilizer_;
   mc_rbdyn::lipm_stabilizer::StabilizerConfiguration
       defaultStabilizerConfig_; /**< Default configuration of the stabilizer */
   ModelPredictiveControl mpc_; /**< MPC problem solver used for walking pattern generation */
